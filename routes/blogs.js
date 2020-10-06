@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Exercise = require('../models/exercise.model');
+const Blog = require('../models/blog.model');
 
 //Show All Exercises
 router.route('/').get((req, res) => {
-  Exercise.find()
-    .then((exercises) => res.json(exercises))
+  Blog.find()
+    .then((blogs) => res.json(blogs))
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });
 
@@ -15,53 +15,51 @@ router.route('/add').post((req, res) => {
   const description = req.body.description;
   const duration = Number(req.body.duration);
   const date = Date.parse(req.body.date);
-  const newExercise = new Exercise({
+  const newBlog = new Blog({
     username,
     description,
     duration,
     date,
   });
 
-  newExercise
+  newBlog
     .save()
-    .then(() => res.json('Exercise added successfully'))
+    .then(() => res.json('Blog added successfully'))
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });
 
 //Show individual exercise
 router.route('/:id').get((req, res) => {
-  Exercise.findById(req.params.id)
-    .then((exercise) => res.json(exercise))
+  Blog.findById(req.params.id)
+    .then((blog) => res.json(blog))
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });
 
 //Delete an exercise
 router.route('/:id').delete((req, res) => {
-  Exercise.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Exercise Deleted!'))
+  Blog.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Blog Deleted!'))
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });
 
 //Update an exercise
 router.route('/update/:id').post((req, res) => {
-  Exercise.findById(req.params.id)
-    .then((exercise) => {
-      exercise.username = req.body.username
-        ? req.body.username
-        : exercise.username;
-      exercise.description = req.body.description
+  Blog.findById(req.params.id)
+    .then((blog) => {
+      blog.username = req.body.username ? req.body.username : blog.username;
+      blog.description = req.body.description
         ? req.body.description
-        : exercise.description;
-      exercise.duration = Number(req.body.duration)
+        : blog.description;
+      blog.duration = Number(req.body.duration)
         ? Number(req.body.duration)
-        : exercise.duration;
-      exercise.date = Date.parse(req.body.date)
+        : blog.duration;
+      blog.date = Date.parse(req.body.date)
         ? Date.parse(req.body.date)
-        : exercise.date;
+        : blog.date;
 
-      exercise
+      blog
         .save()
-        .then(() => res.json('Exercise Updated!'))
+        .then(() => res.json('Blog Updated!'))
         .catch((err) => res.status(400).json(`Error: ${err}`));
     })
     .catch((err) => res.status(400).json(`Error: ${err}`));

@@ -3,7 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
-const exercisesRouter = require('./routes/exercises');
+const blogsRouter = require('./routes/blogs');
 const usersRouter = require('./routes/users');
 
 const app = express();
@@ -27,7 +27,7 @@ connection.once('open', () => {
 });
 
 //Routes
-app.use('/exercises', exercisesRouter);
+app.use('/blogs', blogsRouter);
 app.use('/users', usersRouter);
 
 app.listen(port, () => {
