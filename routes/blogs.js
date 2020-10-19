@@ -12,13 +12,13 @@ router.route('/').get((req, res) => {
 //Add an Exercise
 router.route('/add').post((req, res) => {
   const username = req.body.username;
+  const heading = req.body.heading;
   const description = req.body.description;
-  const duration = Number(req.body.duration);
   const date = Date.parse(req.body.date);
   const newBlog = new Blog({
     username,
+    heading,
     description,
-    duration,
     date,
   });
 
@@ -47,12 +47,12 @@ router.route('/update/:id').post((req, res) => {
   Blog.findById(req.params.id)
     .then((blog) => {
       blog.username = req.body.username ? req.body.username : blog.username;
+      blog.heading = req.body.heading
+        ? req.body.heading
+        : blog.heading;
       blog.description = req.body.description
         ? req.body.description
         : blog.description;
-      blog.duration = Number(req.body.duration)
-        ? Number(req.body.duration)
-        : blog.duration;
       blog.date = Date.parse(req.body.date)
         ? Date.parse(req.body.date)
         : blog.date;
