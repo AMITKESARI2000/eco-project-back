@@ -14,11 +14,15 @@ router.route('/add').post((req, res) => {
   const username = req.body.username;
   const heading = req.body.heading;
   const description = req.body.description;
+  const imgLink = req.body.imgLink;
+  const citation = req.body.citation;
   const date = Date.parse(req.body.date);
   const newBlog = new Blog({
     username,
     heading,
     description,
+    imgLink,
+    citation,
     date,
   });
 
@@ -53,6 +57,12 @@ router.route('/update/:id').post((req, res) => {
       blog.description = req.body.description
         ? req.body.description
         : blog.description;
+      blog.imgLink = req.body.imgLink
+        ? req.body.imgLink
+        : blog.imgLink;
+      blog.citation = req.body.citation
+        ? req.body.citation
+        : blog.citation;
       blog.date = Date.parse(req.body.date)
         ? Date.parse(req.body.date)
         : blog.date;
